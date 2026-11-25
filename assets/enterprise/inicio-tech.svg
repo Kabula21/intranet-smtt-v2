@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="fundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fcff"/>
+      <stop offset=".44" stop-color="#f1f8fd"/>
+      <stop offset="1" stop-color="#e5f3fb"/>
+    </linearGradient>
+    <radialGradient id="luzA">
+      <stop stop-color="#91cfe9" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#91cfe9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="luzB">
+      <stop stop-color="#3e94c2" stop-opacity=".21"/>
+      <stop offset="1" stop-color="#3e94c2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="pontos" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#17638c" opacity=".20"/>
+    </pattern>
+    <linearGradient id="trilha" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#1d86b4" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#1383b1" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#1d86b4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#fundo)"/>
+  <ellipse cx="150" cy="160" rx="570" ry="470" fill="url(#luzA)"/>
+  <ellipse cx="1450" cy="930" rx="640" ry="540" fill="url(#luzB)"/>
+  <rect width="1600" height="1000" fill="url(#pontos)" opacity=".55"/>
+  <g fill="none" stroke="#1c7a9e" opacity=".15">
+    <circle cx="800" cy="510" r="280"/>
+    <circle cx="800" cy="510" r="355"/>
+    <circle cx="800" cy="510" r="435"/>
+    <circle cx="800" cy="510" r="515"/>
+    <circle cx="800" cy="510" r="610"/>
+  </g>
+  <g fill="none" stroke="url(#trilha)" stroke-width="2">
+    <path d="M-80 150H315L470 305H630"/>
+    <path d="M1670 225H1300L1130 395H975"/>
+    <path d="M-70 820H280L455 645H625"/>
+    <path d="M1650 850H1310L1150 690H975"/>
+    <path d="M185 0V240L330 385H485"/>
+    <path d="M1460 -40V160L1310 310H1120"/>
+    <path d="M250 1040V800L415 635H570"/>
+    <path d="M1410 1035V820L1260 670H1110"/>
+  </g>
+  <g fill="#2b8bb6" opacity=".30">
+    <circle cx="315" cy="150" r="4"/><circle cx="1300" cy="225" r="4"/><circle cx="280" cy="820" r="4"/><circle cx="1310" cy="850" r="4"/>
+    <circle cx="330" cy="385" r="3"/><circle cx="1310" cy="310" r="3"/><circle cx="415" cy="635" r="3"/><circle cx="1260" cy="670" r="3"/>
+  </g>
+</svg>

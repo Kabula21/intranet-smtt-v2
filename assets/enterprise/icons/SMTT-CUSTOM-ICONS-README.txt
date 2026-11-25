@@ -1,0 +1,1 @@
+Ícones especiais SMTT criados para este plugin: SVGs vetoriais originais, sem biblioteca externa. Os arquivos foram gerados a partir de componentes geométricos internos e podem ser modificados para uso institucional.

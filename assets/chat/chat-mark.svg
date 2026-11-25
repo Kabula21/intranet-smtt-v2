@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+<title id="title">Chat SMTT</title>
+<defs><linearGradient id="a" x1="5" y1="3" x2="60" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#087E9E"/><stop offset="1" stop-color="#143E69"/></linearGradient></defs>
+<rect width="64" height="64" rx="17" fill="url(#a)"/>
+<path d="M13 19c0-5 4-9 9-9h21c5 0 9 4 9 9v16c0 5-4 9-9 9H31L20 53v-9c-4-.9-7-4.5-7-9V19Z" fill="#fff"/>
+<path d="M26 23h15M26 30h12M26 37h8" stroke="#077D98" stroke-width="3.5" stroke-linecap="round"/>
+<circle cx="47" cy="45" r="10" fill="#F4C343" stroke="#143E69" stroke-width="3"/>
+<path d="M43.5 45h7M47 41.5v7" stroke="#143E69" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

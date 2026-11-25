@@ -1,0 +1,1120 @@
+/* SMTT Intranet V2 — Tour interativo. Isolado dos módulos existentes. */
+.smtt-tour-root {
+    --smtt-tour-blue: #0b78d0;
+    --smtt-tour-blue-strong: #075da7;
+    --smtt-tour-cyan: #12a4df;
+    --smtt-tour-ink: #11243a;
+    --smtt-tour-muted: #607086;
+    --smtt-tour-line: #dfe8f2;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    font-family: inherit;
+    pointer-events: auto;
+}
+
+.smtt-tour-backdrop,
+.smtt-tour-stage {
+    position: fixed;
+    inset: 0;
+}
+
+.smtt-tour-backdrop {
+    background:
+        radial-gradient(circle at 50% 35%, rgba(28, 121, 195, .15), transparent 38%),
+        rgba(7, 18, 35, .69);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.smtt-tour-stage {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.smtt-tour-active .smtt-app,
+body.smtt-tour-active [data-smtt-ramais-root] {
+    pointer-events: none;
+}
+
+/* Abertura */
+.smtt-tour-welcome,
+.smtt-tour-finish {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, calc(100vw - 36px));
+    max-height: calc(100vh - 36px);
+    overflow: auto;
+    display: grid;
+    grid-template-columns: minmax(270px, .92fr) minmax(350px, 1.08fr);
+    background: rgba(255, 255, 255, .985);
+    color: var(--smtt-tour-ink);
+    border-radius: 28px;
+    box-shadow: 0 34px 110px rgba(0, 14, 35, .42);
+    border: 1px solid rgba(255, 255, 255, .78);
+    animation: smttTourEnter .34s cubic-bezier(.2,.8,.2,1);
+}
+
+.smtt-tour-welcome::before,
+.smtt-tour-finish::before,
+.smtt-tour-coachmark::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--smtt-tour-blue), var(--smtt-tour-cyan));
+    pointer-events: none;
+}
+
+.smtt-tour-welcome.no-media {
+    display: block;
+    width: min(650px, calc(100vw - 36px));
+}
+
+.smtt-tour-welcome-media {
+    position: relative;
+    min-height: 470px;
+    background: #e8f3fc;
+    overflow: hidden;
+    border-radius: 28px 0 0 28px;
+}
+
+.smtt-tour-welcome-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(4, 44, 80, .2));
+    pointer-events: none;
+}
+
+.smtt-tour-welcome-media img {
+    width: 100%;
+    height: 100%;
+    min-height: 470px;
+    display: block;
+    object-fit: cover;
+}
+
+.smtt-tour-welcome-media--vertical img {
+    object-position: center top;
+}
+
+.smtt-tour-welcome-copy {
+    padding: 54px 50px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.smtt-tour-welcome.no-media .smtt-tour-welcome-copy {
+    padding: 58px 56px 50px;
+}
+
+.smtt-tour-brandline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: #537089;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: .12em;
+}
+
+.smtt-tour-brandmark {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 24px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--smtt-tour-blue), var(--smtt-tour-cyan));
+    color: #fff;
+    letter-spacing: .02em;
+    box-shadow: 0 7px 16px rgba(11, 120, 208, .24);
+}
+
+.smtt-tour-welcome h2,
+.smtt-tour-finish h2 {
+    margin: 0;
+    font-size: clamp(29px, 3vw, 40px);
+    line-height: 1.08;
+    letter-spacing: -.038em;
+    color: #10243a;
+}
+
+.smtt-tour-welcome p,
+.smtt-tour-finish p {
+    margin: 18px 0 0;
+    font-size: 16px;
+    line-height: 1.72;
+    color: #5b6c81;
+}
+
+.smtt-tour-welcome-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    color: #76879a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.smtt-tour-welcome-meta span:first-child {
+    color: var(--smtt-tour-blue-strong);
+}
+
+.smtt-tour-welcome-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.smtt-tour-primary,
+.smtt-tour-secondary {
+    min-height: 46px;
+    border-radius: 13px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+}
+
+.smtt-tour-primary {
+    background: linear-gradient(135deg, var(--smtt-tour-blue), var(--smtt-tour-blue-strong));
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(11, 120, 208, .25);
+}
+
+.smtt-tour-primary:hover,
+.smtt-tour-primary:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 34px rgba(11, 120, 208, .32);
+}
+
+.smtt-tour-secondary {
+    background: #f7fafe;
+    color: #33475d;
+    border-color: #dce7f1;
+}
+
+.smtt-tour-secondary:hover,
+.smtt-tour-secondary:focus-visible {
+    background: #edf5fc;
+    border-color: #c8daea;
+}
+
+.smtt-tour-secondary:disabled {
+    opacity: .42;
+    cursor: default;
+    transform: none;
+}
+
+.smtt-tour-welcome-note {
+    margin-top: 16px;
+    color: #8997a7;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.smtt-tour-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(205, 218, 231, .78);
+    border-radius: 50%;
+    background: rgba(249, 252, 255, .95);
+    color: #4c5e72;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 4;
+    box-shadow: 0 7px 18px rgba(21, 54, 86, .08);
+}
+
+.smtt-tour-close:hover,
+.smtt-tour-close:focus-visible {
+    background: #edf5fb;
+    color: #0c5f9f;
+}
+
+/* Spotlight da demonstração */
+.smtt-tour-spotlight {
+    position: fixed;
+    border-radius: 20px;
+    box-shadow:
+        0 0 0 9999px rgba(5, 17, 33, .68),
+        0 0 0 3px rgba(255, 255, 255, .96),
+        0 0 0 7px rgba(18, 164, 223, .24),
+        0 18px 48px rgba(0, 0, 0, .26);
+    transition: left .3s cubic-bezier(.2,.8,.2,1), top .3s cubic-bezier(.2,.8,.2,1), width .3s cubic-bezier(.2,.8,.2,1), height .3s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+    animation: smttTourSpotlightPulse 2.3s ease-in-out infinite;
+}
+
+.smtt-tour-coachmark {
+    position: fixed;
+    max-width: calc(100vw - 28px);
+    padding: 24px 24px 20px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .985);
+    color: var(--smtt-tour-ink);
+    box-shadow: 0 28px 86px rgba(0, 12, 32, .34);
+    border: 1px solid rgba(213, 226, 238, .94);
+    animation: smttTourCoach .24s ease;
+}
+
+.smtt-tour-coachmark::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: inherit;
+    border: inherit;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.smtt-tour-coachmark[data-placement="right"]::after {
+    left: -8px;
+    top: 42px;
+    border-top: 0;
+    border-right: 0;
+}
+
+.smtt-tour-coachmark[data-placement="left"]::after {
+    right: -8px;
+    top: 42px;
+    border-bottom: 0;
+    border-left: 0;
+}
+
+.smtt-tour-coachmark[data-placement="bottom"]::after {
+    top: -8px;
+    left: 42px;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.smtt-tour-coachmark[data-placement="top"]::after {
+    bottom: -8px;
+    left: 42px;
+    border-left: 0;
+    border-top: 0;
+}
+
+.smtt-tour-coachmark[data-placement="center"]::after {
+    display: none;
+}
+
+.smtt-tour-coachmark .smtt-tour-close {
+    top: 13px;
+    right: 13px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    box-shadow: none;
+}
+
+.smtt-tour-progress-row {
+    padding-right: 38px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #7d8da0;
+    font-weight: 850;
+}
+
+.smtt-tour-progress-row strong {
+    color: var(--smtt-tour-blue-strong);
+}
+
+.smtt-tour-progress {
+    height: 4px;
+    margin: 10px 0 22px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e7eef5;
+}
+
+.smtt-tour-progress i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--smtt-tour-blue), var(--smtt-tour-cyan));
+    transition: width .28s ease;
+}
+
+.smtt-tour-step-heading {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: start;
+    gap: 14px;
+}
+
+.smtt-tour-step-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    color: #0874c5;
+    background: linear-gradient(145deg, #eef8ff, #e2f2fd);
+    box-shadow: inset 0 0 0 1px rgba(20, 126, 200, .1);
+}
+
+.smtt-tour-step-icon svg {
+    width: 23px;
+    height: 23px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.smtt-tour-step-icon svg path[fill]:not([fill="none"]),
+.smtt-tour-step-icon svg rect[fill]:not([fill="none"]) {
+    fill: currentColor;
+}
+
+.smtt-tour-step-meta {
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.smtt-tour-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: .12em;
+    font-weight: 850;
+    color: #1768b0;
+    text-transform: uppercase;
+}
+
+.smtt-tour-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 20px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #edf9f4;
+    color: #16704d;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: .045em;
+    text-transform: uppercase;
+}
+
+.smtt-tour-live-badge i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22a06b;
+    box-shadow: 0 0 0 4px rgba(34, 160, 107, .12);
+}
+
+.smtt-tour-live-badge--info {
+    background: #f2f6fb;
+    color: #677a90;
+}
+
+.smtt-tour-coachmark h3 {
+    margin: 0;
+    padding-right: 20px;
+    font-size: 22px;
+    line-height: 1.18;
+    letter-spacing: -.025em;
+    color: #10243a;
+}
+
+.smtt-tour-step-text {
+    margin: 14px 0 21px;
+    font-size: 14px;
+    line-height: 1.68;
+    color: #5b6b7f;
+}
+
+.smtt-tour-coach-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.smtt-tour-coach-actions .smtt-tour-primary,
+.smtt-tour-coach-actions .smtt-tour-secondary {
+    flex: 1 1 0;
+}
+
+.smtt-tour-step-footer {
+    min-height: 25px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: #9aa6b4;
+    font-size: 10px;
+}
+
+.smtt-tour-skip {
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: #7d8b9b;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.smtt-tour-skip:hover,
+.smtt-tour-skip:focus-visible {
+    color: #1768b0;
+    text-decoration: underline;
+}
+
+/* Destaque secundário aplicado apenas enquanto a etapa está ativa. */
+.smtt-tour-demo-emphasis {
+    position: relative;
+    z-index: 1;
+    animation: smttTourDemoEmphasis 1.7s ease-in-out infinite;
+}
+
+.smtt-tour-force-open {
+    isolation: isolate;
+}
+
+/* Final */
+.smtt-tour-finish {
+    display: block;
+    width: min(590px, calc(100vw - 36px));
+    padding: 54px 52px 48px;
+    text-align: center;
+}
+
+.smtt-tour-finish .smtt-tour-eyebrow {
+    margin: 0 auto 14px;
+}
+
+.smtt-tour-finish .smtt-tour-primary {
+    margin-top: 28px;
+    min-width: 190px;
+}
+
+.smtt-tour-finish-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 21px;
+    background: linear-gradient(145deg, #e9f7ff, #dff3ff);
+    color: #0b78d0;
+    box-shadow: inset 0 0 0 1px rgba(11, 120, 208, .1), 0 12px 28px rgba(11, 120, 208, .12);
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.smtt-tour-finish-summary {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.smtt-tour-finish-summary span {
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: #f3f8fc;
+    color: #557086;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+/* Dark mode: o próprio Tour acompanha a demonstração do tema. */
+body.smtt-dark-mode .smtt-tour-welcome,
+body.smtt-dark-mode .smtt-tour-finish,
+body.smtt-dark-mode .smtt-tour-coachmark {
+    --smtt-tour-ink: #edf5fc;
+    --smtt-tour-muted: #b6c3d1;
+    --smtt-tour-line: #33465b;
+    background: rgba(20, 32, 47, .985);
+    color: #edf5fc;
+    border-color: #32465c;
+}
+
+body.smtt-dark-mode .smtt-tour-welcome h2,
+body.smtt-dark-mode .smtt-tour-finish h2,
+body.smtt-dark-mode .smtt-tour-coachmark h3 {
+    color: #f4f8fc;
+}
+
+body.smtt-dark-mode .smtt-tour-welcome p,
+body.smtt-dark-mode .smtt-tour-finish p,
+body.smtt-dark-mode .smtt-tour-step-text {
+    color: #b7c4d1;
+}
+
+body.smtt-dark-mode .smtt-tour-secondary,
+body.smtt-dark-mode .smtt-tour-close {
+    background: #223247;
+    border-color: #374b62;
+    color: #e4edf5;
+}
+
+body.smtt-dark-mode .smtt-tour-progress {
+    background: #31445a;
+}
+
+body.smtt-dark-mode .smtt-tour-step-icon {
+    background: #203b54;
+    color: #6fc7ff;
+}
+
+body.smtt-dark-mode .smtt-tour-brandline,
+body.smtt-dark-mode .smtt-tour-welcome-meta,
+body.smtt-dark-mode .smtt-tour-step-footer,
+body.smtt-dark-mode .smtt-tour-welcome-note {
+    color: #95a9bc;
+}
+
+body.smtt-dark-mode .smtt-tour-live-badge--info,
+body.smtt-dark-mode .smtt-tour-finish-summary span {
+    background: #223247;
+    color: #adc0d2;
+}
+
+@keyframes smttTourEnter {
+    from { opacity: 0; transform: translate(-50%, -47%) scale(.975); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes smttTourCoach {
+    from { opacity: 0; transform: translateY(8px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes smttTourSpotlightPulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(18, 164, 223, 0)); }
+    50% { filter: drop-shadow(0 0 8px rgba(18, 164, 223, .28)); }
+}
+
+@keyframes smttTourDemoEmphasis {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.06); }
+}
+
+@media (min-width: 761px) {
+    .smtt-tour-welcome--horizontal {
+        width: min(760px, calc(100vw - 36px));
+        grid-template-columns: 1fr;
+    }
+
+    .smtt-tour-welcome--horizontal .smtt-tour-welcome-media {
+        min-height: 235px;
+        max-height: 300px;
+        border-radius: 28px 28px 0 0;
+    }
+
+    .smtt-tour-welcome--horizontal .smtt-tour-welcome-media img {
+        min-height: 235px;
+        max-height: 300px;
+        object-position: center;
+    }
+
+    .smtt-tour-welcome--horizontal .smtt-tour-welcome-copy {
+        padding: 38px 48px 42px;
+    }
+}
+
+@media (max-width: 760px) {
+    .smtt-tour-welcome {
+        display: block;
+        width: min(540px, calc(100vw - 22px));
+        border-radius: 22px;
+    }
+
+    .smtt-tour-welcome-media {
+        min-height: 190px;
+        max-height: 255px;
+        border-radius: 22px 22px 0 0;
+    }
+
+    .smtt-tour-welcome-media img,
+    .smtt-tour-welcome-media--horizontal img {
+        min-height: 190px;
+        max-height: 255px;
+    }
+
+    .smtt-tour-welcome-copy,
+    .smtt-tour-welcome.no-media .smtt-tour-welcome-copy {
+        padding: 34px 25px 29px;
+    }
+
+    .smtt-tour-welcome h2,
+    .smtt-tour-finish h2 {
+        font-size: 27px;
+    }
+
+    .smtt-tour-welcome p,
+    .smtt-tour-finish p {
+        font-size: 14px;
+    }
+
+    .smtt-tour-welcome-actions,
+    .smtt-tour-coach-actions {
+        flex-direction: column-reverse;
+    }
+
+    .smtt-tour-primary,
+    .smtt-tour-secondary {
+        width: 100%;
+    }
+
+    .smtt-tour-coachmark {
+        padding: 21px 20px 18px;
+        border-radius: 18px;
+    }
+
+    .smtt-tour-step-heading {
+        grid-template-columns: 42px 1fr;
+        gap: 11px;
+    }
+
+    .smtt-tour-step-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+    }
+
+    .smtt-tour-coachmark h3 {
+        font-size: 19px;
+    }
+
+    .smtt-tour-step-text {
+        font-size: 13px;
+        margin-bottom: 17px;
+    }
+
+    .smtt-tour-step-footer > span {
+        display: none;
+    }
+
+    .smtt-tour-finish {
+        width: min(540px, calc(100vw - 22px));
+        padding: 44px 26px 34px;
+    }
+
+    .smtt-tour-coachmark::after {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .smtt-tour-welcome,
+    .smtt-tour-finish,
+    .smtt-tour-coachmark,
+    .smtt-tour-spotlight,
+    .smtt-tour-primary,
+    .smtt-tour-demo-emphasis {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* =========================================================
+   TOUR V2.0.22 — acabamento e transições estáveis
+   ========================================================= */
+
+/* A faixa decorativa superior foi removida: o progresso já cumpre essa função. */
+.smtt-tour-welcome::before,
+.smtt-tour-finish::before,
+.smtt-tour-coachmark::before {
+    display: none !important;
+}
+
+/* Enquanto o viewport é reposicionado, nada "viaja" pela tela. */
+.smtt-tour-root.is-transitioning .smtt-tour-spotlight,
+.smtt-tour-root.is-transitioning .smtt-tour-coachmark {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+.smtt-tour-spotlight {
+    opacity: 1;
+    animation: none !important;
+    transition: opacity .16s ease !important;
+}
+
+.smtt-tour-coachmark {
+    transition: opacity .16s ease !important;
+}
+
+/* Destaques auxiliares ficam estáticos. Nada pulsa/pisca durante a navegação. */
+.smtt-tour-demo-emphasis {
+    animation: none !important;
+    filter: none !important;
+    outline: 3px solid rgba(18, 164, 223, .78) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 7px rgba(18, 164, 223, .12) !important;
+    border-radius: 12px;
+}
+
+.smtt-tour-agenda-day-focus {
+    outline-offset: 2px !important;
+    border-radius: 999px !important;
+}
+
+/* X do próprio Tour: reset completo para não herdar estilos do WP/tema. */
+.smtt-tour-root .smtt-tour-close,
+.smtt-tour-root .smtt-tour-close:hover,
+.smtt-tour-root .smtt-tour-close:focus,
+.smtt-tour-root .smtt-tour-close:focus-visible,
+.smtt-tour-root .smtt-tour-close:active {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: absolute !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #d8e4ef !important;
+    border-radius: 999px !important;
+    background: #f8fbfe !important;
+    color: #506579 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    text-indent: 0 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-shadow: 0 6px 18px rgba(16, 51, 82, .08) !important;
+    transform: none !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+}
+
+.smtt-tour-root .smtt-tour-coachmark .smtt-tour-close,
+.smtt-tour-root .smtt-tour-coachmark .smtt-tour-close:hover,
+.smtt-tour-root .smtt-tour-coachmark .smtt-tour-close:focus,
+.smtt-tour-root .smtt-tour-coachmark .smtt-tour-close:focus-visible,
+.smtt-tour-root .smtt-tour-coachmark .smtt-tour-close:active {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+}
+
+.smtt-tour-root .smtt-tour-close:hover,
+.smtt-tour-root .smtt-tour-close:focus-visible {
+    background: #eef7fd !important;
+    border-color: #b9d7eb !important;
+    color: #0874c5 !important;
+    box-shadow: 0 7px 20px rgba(11, 120, 208, .12) !important;
+}
+
+.smtt-tour-close-icon {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+    flex: 0 0 16px !important;
+    overflow: visible !important;
+    pointer-events: none !important;
+}
+
+.smtt-tour-close-icon path {
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.7 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+}
+
+/* X dos modais reais abertos durante a demonstração. O WordPress não pode
+   sobrescrever o hover com rosa/vermelho enquanto o Tour estiver ativo. */
+body.smtt-tour-active .smtt-mural-modal-close,
+body.smtt-tour-active .smtt-bday-modal-close,
+body.smtt-tour-active .smtt-bday-timeline-close,
+body.smtt-tour-active .smtt-access-sector-modal-close,
+body.smtt-tour-active .smtt-ramais-close-button,
+body.smtt-tour-active .smtt-mural-lightbox-close {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #d7e3ed !important;
+    border-radius: 10px !important;
+    background: #f8fbfe !important;
+    color: #587087 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+body.smtt-tour-active .smtt-mural-modal-close::before,
+body.smtt-tour-active .smtt-mural-modal-close::after,
+body.smtt-tour-active .smtt-bday-modal-close::before,
+body.smtt-tour-active .smtt-bday-modal-close::after,
+body.smtt-tour-active .smtt-bday-timeline-close::before,
+body.smtt-tour-active .smtt-bday-timeline-close::after,
+body.smtt-tour-active .smtt-access-sector-modal-close::before,
+body.smtt-tour-active .smtt-access-sector-modal-close::after,
+body.smtt-tour-active .smtt-ramais-close-button::before,
+body.smtt-tour-active .smtt-ramais-close-button::after,
+body.smtt-tour-active .smtt-mural-lightbox-close::before,
+body.smtt-tour-active .smtt-mural-lightbox-close::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 14px !important;
+    height: 1.6px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: currentColor !important;
+    transform-origin: center !important;
+    pointer-events: none !important;
+}
+
+body.smtt-tour-active .smtt-mural-modal-close::before,
+body.smtt-tour-active .smtt-bday-modal-close::before,
+body.smtt-tour-active .smtt-bday-timeline-close::before,
+body.smtt-tour-active .smtt-access-sector-modal-close::before,
+body.smtt-tour-active .smtt-ramais-close-button::before,
+body.smtt-tour-active .smtt-mural-lightbox-close::before {
+    transform: translate(-50%, -50%) rotate(45deg) !important;
+}
+
+body.smtt-tour-active .smtt-mural-modal-close::after,
+body.smtt-tour-active .smtt-bday-modal-close::after,
+body.smtt-tour-active .smtt-bday-timeline-close::after,
+body.smtt-tour-active .smtt-access-sector-modal-close::after,
+body.smtt-tour-active .smtt-ramais-close-button::after,
+body.smtt-tour-active .smtt-mural-lightbox-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg) !important;
+}
+
+body.smtt-tour-active .smtt-mural-modal-close:hover,
+body.smtt-tour-active .smtt-mural-modal-close:focus-visible,
+body.smtt-tour-active .smtt-bday-modal-close:hover,
+body.smtt-tour-active .smtt-bday-modal-close:focus-visible,
+body.smtt-tour-active .smtt-bday-timeline-close:hover,
+body.smtt-tour-active .smtt-bday-timeline-close:focus-visible,
+body.smtt-tour-active .smtt-access-sector-modal-close:hover,
+body.smtt-tour-active .smtt-access-sector-modal-close:focus-visible,
+body.smtt-tour-active .smtt-ramais-close-button:hover,
+body.smtt-tour-active .smtt-ramais-close-button:focus-visible,
+body.smtt-tour-active .smtt-mural-lightbox-close:hover,
+body.smtt-tour-active .smtt-mural-lightbox-close:focus-visible {
+    background: #edf7fd !important;
+    border-color: #b9d8ec !important;
+    color: #0874c5 !important;
+    box-shadow: 0 6px 16px rgba(11, 120, 208, .10) !important;
+    transform: none !important;
+}
+
+body.smtt-dark-mode.smtt-tour-active .smtt-mural-modal-close,
+body.smtt-dark-mode.smtt-tour-active .smtt-bday-modal-close,
+body.smtt-dark-mode.smtt-tour-active .smtt-bday-timeline-close,
+body.smtt-dark-mode.smtt-tour-active .smtt-access-sector-modal-close,
+body.smtt-dark-mode.smtt-tour-active .smtt-ramais-close-button,
+body.smtt-dark-mode.smtt-tour-active .smtt-mural-lightbox-close {
+    background: #223247 !important;
+    border-color: #3a5066 !important;
+    color: #dce8f2 !important;
+}
+
+/* Atalho do Tour na navbar — v2.0.24
+   Fica junto aos demais controles do topo e nunca cobre os cards da home. */
+body.smtt-intranet-page .smtt-tour-replay,
+body.smtt-intranet-page .smtt-tour-replay:hover,
+body.smtt-intranet-page .smtt-tour-replay:focus,
+body.smtt-intranet-page .smtt-tour-replay:focus-visible,
+body.smtt-intranet-page .smtt-tour-replay:active {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: relative !important;
+    inset: auto !important;
+    z-index: 520 !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    align-self: center !important;
+    flex: 0 0 38px !important;
+    border: 1px solid #cfe4f1 !important;
+    border-radius: 50% !important;
+    background: #f8fcff !important;
+    background-image: none !important;
+    color: #0878c9 !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    transform: none !important;
+    opacity: 1;
+    outline: 0 !important;
+    isolation: isolate;
+    transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease !important;
+}
+
+body.smtt-intranet-page .smtt-tour-replay:hover,
+body.smtt-intranet-page .smtt-tour-replay:focus-visible {
+    border-color: #8fc6e6 !important;
+    background: #edf8ff !important;
+    color: #056caf !important;
+    box-shadow: 0 5px 14px rgba(8, 120, 201, .13) !important;
+}
+
+body.smtt-intranet-page .smtt-tour-replay-icon {
+    width: 20px !important;
+    height: 20px !important;
+    display: grid !important;
+    place-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    border-radius: 0 !important;
+    pointer-events: none;
+}
+
+body.smtt-intranet-page .smtt-tour-replay-icon svg {
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
+    fill: none !important;
+    stroke: currentColor !important;
+}
+
+/* Tooltip próprio: aparece logo abaixo da navbar no hover/foco. */
+body.smtt-intranet-page .smtt-tour-replay::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 9px);
+    right: 0;
+    width: max-content;
+    max-width: 220px;
+    padding: 7px 10px;
+    border: 1px solid rgba(183, 207, 224, .95);
+    border-radius: 8px;
+    background: #102f4a;
+    color: #fff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    white-space: nowrap;
+    box-shadow: 0 8px 22px rgba(15, 47, 74, .18);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-3px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+
+body.smtt-intranet-page .smtt-tour-replay:hover::after,
+body.smtt-intranet-page .smtt-tour-replay:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+body.smtt-tour-active .smtt-tour-replay {
+    opacity: .28 !important;
+    pointer-events: none !important;
+}
+
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay,
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:hover,
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:focus,
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:focus-visible,
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:active {
+    border-color: #33506c !important;
+    background: #17283a !important;
+    color: #8bd7ff !important;
+}
+
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:hover,
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay:focus-visible {
+    border-color: #4e7898 !important;
+    background: #1e354a !important;
+    color: #c7ecff !important;
+}
+
+body.smtt-dark-mode.smtt-intranet-page .smtt-tour-replay::after {
+    border-color: #40566b;
+    background: #eef7fd;
+    color: #102f4a;
+}
+
+@media (max-width: 760px) {
+    body.smtt-intranet-page .smtt-tour-replay,
+    body.smtt-intranet-page .smtt-tour-replay:hover,
+    body.smtt-intranet-page .smtt-tour-replay:focus,
+    body.smtt-intranet-page .smtt-tour-replay:focus-visible,
+    body.smtt-intranet-page .smtt-tour-replay:active {
+        width: 36px !important;
+        min-width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        flex-basis: 36px !important;
+    }
+}
